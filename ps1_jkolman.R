@@ -10,7 +10,8 @@ library(foreign)
 library(xtable)
 #library(Matching)
 
-#This is a standard set of packages I use to manipulate data and make graphics. In the first class that I learned R, I picked up tdyr and dplyr, o I'll try to use them as much as possible.
+#This is a standard set of packages I use to manipulate data and make graphics. In the first class that I learned R, 
+#I picked up tdyr and dplyr, o I'll try to use them as much as possible.
 
 #Problem 1
 vote <- read.csv(file="vote.csv") %>% tbl_df() #import file and change to tbl class
@@ -55,7 +56,9 @@ vote %>% group_by(state,vote) %>% summarise(mean(age))
 vote %>% group_by(state,vote) %>% summarise(mean(age)) %>% xtable #Table for LaTex
 
 #Problem 7
-vote_7 <- with(vote,order(state,age)) %>% vote[.,] #First, "within the vote environment, order the data first by state, then by age". That produces a vector of ranks for each row. Second, place those ranks into the row call argument of vote and that calls them in the correct order.
+vote_7 <- with(vote,order(state,age)) %>% vote[.,] #First, "within the vote environment, order the data first by state,
+#then by age". That produces a vector of ranks for each row. Second, place those ranks into the row call argument of vote
+#and that calls them in the correct order.
 
 vote_7 %>% group_by(state) %>% summarise(min(age))
 #18 is the youngest for both states
@@ -65,7 +68,8 @@ vote %>% filter(age == 18) %>% group_by(state) %>% summarise(mean(income)) #Sele
 #AR: 14, SC:16
 
 #Problem 9
-vote_9 <- vote_7 %>% mutate(low_inc = as.numeric(income < 13)) #add a column with 1's and 0's corresponding to answers YES or NO to the logical question of vote_7[x,y = income] < 13 for each x.
+vote_9 <- vote_7 %>% mutate(low_inc = as.numeric(income < 13)) #add a column with 1's and 0's corresponding to answers YES 
+#or NO to the logical question of vote_7[x,y = income] < 13 for each x.
 
 vote_9 %>% select(low_inc) %>% table()
 #676 are low income
@@ -89,13 +93,15 @@ by_low_inc[2,2]/sum(by_low_inc[2,])
 
 #Problem 12
 set.seed(17800)
-vote_9 %>% sample_n(100) %>% summary() #Sample the table vote_9 100 times without replacement, find vote summary statistic from summary() and the mean row shows the proportion of individuals who voted
+vote_9 %>% sample_n(100) %>% summary() #Sample the table vote_9 100 times without replacement, find vote summary statistic from 
+#summary() and the mean row shows the proportion of individuals who voted
 #0.92
 
 #Problem 13
 set.seed(17800)
 vote_9 %>% sample_n(1000) %>% summary()
-#0.82 voted in this sample which is less than problem 12. As we sample a larger number of rows without replacement, the sampled dataset approaches the dataset sampled.
+#0.82 voted in this sample which is less than problem 12. As we sample a larger number of rows without replacement, the sampled 
+#dataset approaches the dataset sampled.
 
 #Problem 14
 #part a)
@@ -103,7 +109,8 @@ my.mean <- function(x) {
   sum(x)/length(x)
 }
 
-vote_9 %>% select(-c(state,year)) %>% summarise_each(funs(my.mean)) #Deselect the state and year columns, apply the summary function my.mean to each column
+vote_9 %>% select(-c(state,year)) %>% summarise_each(funs(my.mean)) #Deselect the state and year columns, apply the summary 
+#function my.mean to each column
 #vote=0.86, income=12, ed=2.6,age=49, female=.56, low_inc=.45
 vote_9 %>% select(-c(state,year)) %>% summarise_each(funs(mean))
 #vote=0.86, income=12, ed=2.6,age=49, female=.56, low_inc=.45
@@ -111,7 +118,8 @@ vote_9 %>% select(-c(state,year)) %>% summarise_each(funs(mean))
 #part b)
 sanders <- function(x) {
   x <-  x %>% mutate(rank = row_number(income)) #Adds a column with the ranking by income
-  x %>% filter(rank < .99*length(rank)) %>% summarise(sanders = mean(income)) #Filters out those rows who's place is higher than 99% of the total length of the vector. The mean is then found of the resulting table's income.
+  x %>% filter(rank < .99*length(rank)) %>% summarise(sanders = mean(income)) #Filters out those rows who's place is higher 
+  #than 99% of the total length of the vector. The mean is then found of the resulting table's income.
 }
 sanders(vote_9)
 #12.42
@@ -120,7 +128,8 @@ sanders(vote_9)
 load("matrixA.RData")
 matrixA2 <- matrixA %>% as.data.frame() %>% tbl_df #conversion
 #part a)
-matrixA2 %>% select(c(1:3)) %>% summarise_each(funs(sum)) #Selected the first three columns, summarized each with the mean() function
+matrixA2 %>% select(c(1:3)) %>% summarise_each(funs(sum)) #Selected the first three columns, summarized each with the mean() 
+#function
 #115.9,159.9,95.4
 
 #part b)
