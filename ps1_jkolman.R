@@ -78,9 +78,11 @@ vote_9 %>% select(low_inc) %>% table()
 par(mfrow=c(1,3))
 ggplot(vote_9,aes(education)) + geom_bar() + xlab("Education Level") + ggtitle("All Individuals") + theme_light()
 ggsave("AllIn.jpg")
-vote_9 %>% filter(low_inc == 1) %>% ggplot(.,aes(education)) + geom_bar() + xlab("Education Level") + ggtitle("Low Income Individuals") + theme_light()
+vote_9 %>% filter(low_inc == 1) %>% ggplot(.,aes(education)) + geom_bar() + xlab("Education Level") + 
+ggtitle("Low Income Individuals") + theme_light()
 ggsave("LowIn.jpg")
-vote_9 %>% filter(low_inc == 0) %>% ggplot(.,aes(education)) + geom_bar() + xlab("Education Level") + ggtitle("High Income Individuals") + theme_light()
+vote_9 %>% filter(low_inc == 0) %>% ggplot(.,aes(education)) + geom_bar() + xlab("Education Level") + 
+ggtitle("High Income Individuals") + theme_light()
 ggsave("HighIn.jpg")
 
 #Problem 11
